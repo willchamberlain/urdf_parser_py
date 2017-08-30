@@ -207,6 +207,20 @@ xmlr.reflect(Visual, params=[
 ])
 
 
+
+class Appearance(xmlr.Object):
+    def __init__(self, algorithm=None, descriptor=None, origin=None):
+        self.algorithm = algorithm
+        self.descriptor = descriptor
+        self.origin = origin
+
+
+xmlr.reflect(Appearance, params=[
+    xmlr.Attribute('algorithm', str),
+    xmlr.Attribute('descriptor', str),
+    origin_element
+])
+
 class Inertia(xmlr.Object):
     KEYS = ['ixx', 'ixy', 'ixz', 'iyy', 'iyz', 'izz']
 
@@ -352,18 +366,21 @@ xmlr.reflect(Joint, params=[
 class Link(xmlr.Object):
     def __init__(self, name=None, visual=None, inertial=None, collision=None,
                  origin=None):
+        self.aggregate_init()
         self.name = name
         self.visual = visual
         self.inertial = inertial
         self.collision = collision
         self.origin = origin
+        self.appearances = []
 
 xmlr.reflect(Link, params=[
     name_attribute,
     origin_element,
     xmlr.Element('inertial', Inertial, False),
     xmlr.Element('visual', Visual, False),
-    xmlr.Element('collision', Collision, False)
+    xmlr.Element('collision', Collision, False),
+    xmlr.AggregateElement('appearance', Appearance)
 ])
 
 
