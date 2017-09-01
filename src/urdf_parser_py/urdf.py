@@ -47,6 +47,7 @@ name_attribute = xmlr.Attribute('name', str)
 origin_element = xmlr.Element('origin', Pose, False)
 
 
+
 class Color(xmlr.Object):
     def __init__(self, *args):
         # What about named colors?
@@ -467,6 +468,8 @@ class Robot(xmlr.Object):
         self.materials = []
         self.gazebos = []
         self.transmissions = []
+        
+        self.appearances = []
 
         self.joint_map = {}
         self.link_map = {}
@@ -539,7 +542,8 @@ xmlr.reflect(Robot, tag='robot', params=[
     xmlr.AggregateElement('joint', Joint),
     xmlr.AggregateElement('gazebo', xmlr.RawType()),
     xmlr.AggregateElement('transmission', 'transmission'),
-    xmlr.AggregateElement('material', Material)
+    xmlr.AggregateElement('material', Material), 
+    xmlr.AggregateElement('appearance', Appearance, False)
 ])
 
 # Make an alias
